@@ -61,7 +61,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
 @import "../assets/scss/style";
 body {
-  background-image: linear-gradient(to bottom, #fff, #f5f5f5);
+  background-image: linear-gradient(to bottom, palette(mono, 100), #f5f5f5);
   min-height: 100vh;
   font-family: "Roboto Mono", monospace;
 }

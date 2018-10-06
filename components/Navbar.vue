@@ -32,22 +32,21 @@ export default {
 
 <style lang="scss">
 .navbar {
-  padding: 20px;
-  background-color: #fff;
+  font-size: 16px;
+  font-weight: 700;
   display: grid;
   grid-auto-flow: column;
-  justify-content: space-between;
-  color: #000000;
-  font-weight: 700;
   align-items: baseline;
-  font-size: 16px;
+  justify-content: space-between;
+  padding: 20px;
+  color: palette(mono) 000;
+  background-color: palette(mono, 100);
   &__brand {
     // font-weight: 700;
     font-size: 20px;
   }
   &__items {
     // font-weight: 700;
-
     display: grid;
     grid-auto-flow: column;
     grid-column-gap: 20px;
@@ -59,15 +58,15 @@ export default {
     }
   }
   &__link {
-    text-decoration: none;
     transition: all 0.1s ease;
+    text-decoration: none;
     &:visited {
-      color: #000;
+      color: palette(mono);
     }
     &:hover {
-      color: lighten(#000, 50%);
+      color: lighten(palette(mono), 50%);
       svg {
-        fill: lighten(#000, 50%);
+        fill: lighten(palette(mono), 50%);
       }
     }
   }

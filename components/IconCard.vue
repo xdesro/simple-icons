@@ -4,7 +4,7 @@
     <div class="icon-card__header">
       <div class="icon-card__title">{{this.icon.title}}</div>
       <div class="icon-card__hex" >#{{this.icon.hex}}</div>
-      <a class="icon-card__link" :href="this.icon.source">brand guidelines -></a>
+      <a class="icon-card__link" :href="this.icon.source"><IconExternalLink class="icon-card__link-icon"/>brand guidelines</a>
     </div>
     <div class="icon-card__footer">
       <img class="icon-card__main-icon" :src="this.iconPath">
@@ -13,15 +13,23 @@
         <div class="icon-card__button">SVG</div>
         <div class="icon-card__button">PNG</div>
       </div>
-      <a class="icon-card__link">copy svg code</a>
+      <a class="icon-card__link" v-clipboard:copy=""><IconCodeCopy class="icon-card__link-icon" />copy svg code</a>
     </div>
   </div>
 </template>
 
 <script>
 import { hex } from "wcag-contrast";
+
+import IconCodeCopy from "@/components/icons/IconCodeCopy.vue";
+import IconExternalLink from "@/components/icons/IconExternalLink.vue";
+
 export default {
   props: ["icon"],
+  components: {
+    IconCodeCopy,
+    IconExternalLink
+  },
   created() {
     this.iconPath = require(`~/assets/icons/${this.icon.svg}`);
   },
@@ -34,9 +42,9 @@ export default {
     cssProps() {
       const contrastColor = () => {
         if (hex(`#${this.icon.hex}`, "#000") > 10) {
-          return "#000";
+          return "black";
         } else {
-          return "#FFF";
+          return "white";
         }
       };
       return {
@@ -50,61 +58,80 @@ export default {
 
 <style lang="scss">
 .icon-card {
+  position: relative;
   display: grid;
+  overflow: hidden;
+  align-content: end;
   border-radius: 7px;
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
-  align-content: end;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.2s ease;
+  &:hover {
+    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.4);
+  }
   &__header {
-    padding: 15px;
-    border-bottom: 1px solid #d8d8d8;
-    height: 200px;
     display: grid;
-    grid-row-gap: 5px;
+    grid-template-rows: 1fr auto auto;
+    grid-row-gap: 10px;
     align-items: end;
     justify-items: start;
-    grid-template-rows: 1fr auto auto;
+    height: 200px;
+    padding: 15px;
+    border-bottom: 1px solid #d8d8d8;
   }
   &__title {
-    font-weight: 700;
     font-size: 30px;
+    font-weight: 700;
   }
   &__hex {
     font-size: 16px;
     padding: 5px 15px;
+    cursor: pointer;
     color: var(--contrast-color);
     background-color: var(--highlight-color);
   }
   &__link {
     font-size: 12px;
-    color: #555;
-    text-decoration: none;
-    user-select: none;
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 5px;
+    align-items: center;
+    justify-items: start;
     cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    color: #555;
     &:visited {
       color: #555;
     }
     &:hover {
-      color: #000;
+      color: palette(mono);
+      path {
+        fill: palette(mono);
+      }
+    }
+  }
+  &__link-icon {
+    height: 15px;
+    path {
+      fill: #555;
     }
   }
   &__footer {
-    padding: 15px;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-column-gap: 15px;
-    align-content: center;
-    grid-row-gap: 5px;
     grid-template-areas:
       "icon title"
       "icon buttons"
       "icon clipboard";
+    grid-row-gap: 5px;
+    grid-column-gap: 15px;
+    align-content: center;
+    padding: 15px;
   }
   &__main-icon {
     grid-area: icon;
-    height: 75px;
     max-width: 100%;
+    height: 75px;
   }
   &__background-icon {
     position: absolute;
@@ -114,31 +141,31 @@ export default {
     opacity: 0.07;
   }
   &__subheader {
-    font-weight: 500;
     font-size: 20px;
-    text-transform: uppercase;
+    font-weight: 500;
     letter-spacing: 3.4px;
+    text-transform: uppercase;
   }
   &__actions {
     display: grid;
-    grid-auto-flow: column;
     grid-auto-columns: auto;
-    align-items: start;
+    grid-auto-flow: column;
     grid-column-gap: 5px;
+    align-items: start;
   }
   &__button {
-    border: 1px solid #000;
-    padding: 5px 10px;
-    font-weight: 500;
     font-size: 12px;
-    text-align: center;
+    font-weight: 500;
+    padding: 5px 10px;
     cursor: pointer;
-    color: #555555;
-    letter-spacing: 3.24px;
     user-select: none;
+    text-align: center;
+    letter-spacing: 3.24px;
+    color: #555555;
+    border: 1px solid palette(mono);
     &:hover {
-      background: #000;
-      color: #fff;
+      color: palette(mono, 100);
+      background: palette(mono);
     }
   }
 }

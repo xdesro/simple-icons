@@ -6,7 +6,7 @@
     </div>
     <div class="filters__buttons filters__sort">
       <div class="filters__label">sort</div>
-      <div class="filters__button"><IconSortAlphabet /></div>
+      <div class="filters__button" v-bind:class="{active: true}"><IconSortAlphabet /></div>
       <div class="filters__button"><IconSortHue /></div>
     </div>
     <div class="filters__buttons filters__layout">
@@ -46,68 +46,60 @@ export default {
 <style lang="scss">
 .filters {
   display: grid;
-  margin-bottom: 75px;
-  // grid-auto-flow: column;
-  justify-content: start;
-  align-items: end;
   grid-template-columns: auto auto 1fr auto;
   grid-column-gap: 40px;
-  &__search {
+  align-items: end;
+  justify-content: start;
+  margin-bottom: 75px;
+  &__layout {
+    grid-column: -1;
+  }
+  &__buttons {
+    display: grid;
+    grid-template-areas: "label label" "button1 button2";
+    grid-column-gap: 10px;
   }
   &__label {
     font-size: 12px;
-    color: #555555;
-    margin-bottom: 5px;
     grid-area: label;
+    margin-bottom: 5px;
+    color: #555555;
     &--end {
       justify-self: end;
     }
   }
   &__input {
     all: unset;
-    border: 1px solid #555555;
     font-size: 16px;
     padding: 7px 5px;
-  }
-  &__sort {
-    display: grid;
-    grid-column-gap: 10px;
-    grid-template-areas: "label label" "button1 button2";
+    border: 1px solid #555555;
   }
   &__button {
-    border: 1px solid #000;
+    display: grid;
     padding: 5px 10px;
     cursor: pointer;
-    display: grid;
+    border: 1px solid palette(mono);
+
     place-items: center;
     svg {
       height: 24px;
       .path--contrast {
-        fill: #fff;
+        fill: palette(mono, 100);
       }
     }
     &:hover,
     &.active {
-      background: #000;
+      background: palette(mono);
       svg {
-        fill: #fff;
+        fill: palette(mono, 100);
         .path--contrast {
-          fill: #000;
+          fill: palette(mono);
         }
         .path--bar {
-          fill: #ff0000;
+          fill: palette(warn);
         }
       }
     }
-  }
-  &__layout {
-    justify-self: end;
-    grid-column: -1;
-  }
-  &__buttons {
-    display: grid;
-    grid-column-gap: 10px;
-    grid-template-areas: "label label" "button1 button2";
   }
 }
 </style>
